@@ -9,35 +9,14 @@
   flex-direction: column;
 }
 
-<<<<<<< HEAD
-@media (max-width: 30rem) {
-  .game__container {
-    width: 100%;
-  }
-}
-
-=======
->>>>>>> ui
 .game__container button {
   margin-top: 2rem;
   padding: 1rem;
   font-size: 1rem;
-<<<<<<< HEAD
   border: 1px solid black;
-}
-
-.game__container button:hover {
-  background-color: black;
-  color: white;
-  border: 1px solid white;
-  cursor: pointer;
-  transition: background-color 0.5s;
-  animation: slide-up 0.2s forwards;
-=======
-  font-family: inherit;
-  background-color: rgba(0, 0, 0, 0.05);
   border-radius: 100px;
->>>>>>> ui
+  background-color: rgba(0, 0, 0, 0.05);
+  font-family: inherit;
 }
 
 .game__header {
@@ -94,8 +73,6 @@
     transform: translateY(0);
   }
 }
-<<<<<<< HEAD
-=======
 
 @media (max-width: 30rem) {
   .game__container {
@@ -124,4 +101,3 @@
     -webkit-tap-highlight-color: transparent;
   }
 }
->>>>>>> ui

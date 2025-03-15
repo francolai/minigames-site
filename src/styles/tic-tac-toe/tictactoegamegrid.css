@@ -51,7 +51,7 @@
 }
 
 .game__grid div.nought {
-  background-image: url(/nought.png);
+  background-image: url('/src/assets/tic-tac-toe/nought.png');
   background-size: 75%;
   background-repeat: no-repeat;
   background-position: center;
@@ -59,7 +59,7 @@
 }
 
 .game__grid div.cross {
-  background-image: url(/cross.png);
+  background-image: url('/src/assets/tic-tac-toe/cross.png');
   background-size: 75%;
   background-repeat: no-repeat;
   background-position: center;
@@ -75,7 +75,7 @@
   }
 }
 .game__grid-turn_nought div.unselected {
-  background-image: url(/nought.png);
+  background-image: url('/src/assets/tic-tac-toe/nought.png');
   background-size: 75%;
   background-repeat: no-repeat;
   background-position: center;
@@ -88,7 +88,7 @@
 }
 
 .game__grid-turn_cross div.unselected {
-  background-image: url(/cross.png);
+  background-image: url('/src/assets/tic-tac-toe/cross.png');
   background-size: 75%;
   background-repeat: no-repeat;
   background-position: center;

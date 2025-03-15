@@ -2,11 +2,11 @@ import { useState } from 'react';
 
 import TicTacToeGameGrid from './TicTacToeGameGrid';
 import TicTacToeGameHeader from './TicTacToeGameHeader';
-import Modal from '../shared/components/Modal';
+import Modal from '../shared/Modal';
 import TicTacToeModalContent from './TicTacToeModalContent';
-import TicTacToeGameLogic from '../util/tic-tac-toe-gameLogic';
+import TicTacToeGameLogic from '../../util/tic-tac-toe/tic-tac-toe-gameLogic';
 
-import '../styles/tictactoe.css';
+import '/src/styles/tic-tac-toe/tictactoe.css';
 
 const gameLogic = new TicTacToeGameLogic();
 

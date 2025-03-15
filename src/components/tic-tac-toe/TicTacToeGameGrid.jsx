@@ -1,4 +1,4 @@
-import '../styles/tictactoegamegrid.css';
+import '/src/styles/tic-tac-toe/tictactoegamegrid.css';
 
 function TicTacToeGameGrid({
   gameOver,

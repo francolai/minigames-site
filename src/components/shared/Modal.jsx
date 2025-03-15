@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-import '../../styles/modal.css';
+import '/src/styles/shared/modal.css';
 import { createPortal } from 'react-dom';
 
 function Modal({ className, open, children }) {
