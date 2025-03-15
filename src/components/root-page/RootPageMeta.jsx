@@ -1,7 +1,6 @@
 function RootPageMeta() {
   return (
     <>
-      <meta charSet="UTF-8" />
       <link
         rel="icon"
         type="image/png"

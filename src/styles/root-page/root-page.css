@@ -8,13 +8,14 @@
   margin-right: 2rem;
 }
 
-.root_game_list__tic-tac-toe {
+.root_game_list__item {
   display: flex;
   width: 12rem;
   margin: 3rem auto;
   height: 4rem;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
   border: 1px solid black;
   border-radius: 100px;
+  text-transform: uppercase;
 }
