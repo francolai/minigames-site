@@ -5,7 +5,7 @@ function RootPageMeta() {
       <link
         rel="icon"
         type="image/png"
-        href="/src/assets/tic-tac-toe/gaming.png"
+        href="/src/assets/root-page/gaming.png"
       />
       <title>Mini Games</title>
     </>
