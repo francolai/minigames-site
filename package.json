@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://francolai.github.io/minigames-site",
+  "homepage": "https://francolai.github.io/minigames-site/#",
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
