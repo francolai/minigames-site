@@ -1,0 +1,20 @@
+.root_game_list a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.root_game_list img {
+  height: 80%;
+  margin-right: 2rem;
+}
+
+.root_game_list__tic-tac-toe {
+  display: flex;
+  width: 12rem;
+  margin: 3rem auto;
+  height: 4rem;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+  border-radius: 100px;
+}

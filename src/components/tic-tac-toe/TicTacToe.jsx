@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 import TicTacToeGameGrid from './TicTacToeGameGrid';
 import TicTacToeGameHeader from './TicTacToeGameHeader';
@@ -7,10 +7,11 @@ import TicTacToeModalContent from './TicTacToeModalContent';
 import TicTacToeGameLogic from '../../util/tic-tac-toe/tic-tac-toe-gameLogic';
 
 import '/src/styles/tic-tac-toe/tictactoe.css';
-
-const gameLogic = new TicTacToeGameLogic();
+import TicTacToeMeta from './TicTacToeMeta';
+import HomeButton from '../shared/HomeButton';
 
 function TicTacToe() {
+  const { current: gameLogic } = useRef(new TicTacToeGameLogic());
   const [selectedCells, setSelectedCells] = useState({});
   const [currentPlayer, setCurrentPlayer] = useState(gameLogic.currentPlayer);
 
@@ -34,6 +35,8 @@ function TicTacToe() {
 
   return (
     <>
+      <TicTacToeMeta />
+      <HomeButton />
       <Modal open={gameLogic.isGameOver()} className="game__modal">
         <TicTacToeModalContent
           winner={gameLogic.winner}
