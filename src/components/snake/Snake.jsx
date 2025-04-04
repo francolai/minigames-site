@@ -1,85 +1,106 @@
-import { useEffect, useReducer, useState, useRef } from 'react';
-import '/src/styles/snake/snake.css';
-import snakeHeadReducer from './snakeHeadReducer';
-import { NUM_ROW, NUM_COL, INIT_POS, MOVE_SPEED } from './snakeInitVar.js';
+import { useEffect, useState, useRef } from 'react';
+
+import { MOVE_SPEED } from '../../util/snake/snakeInitVar.js';
+import SnakeGameManager from '../../util/snake/snake.js';
 import HomeButton from '../shared/HomeButton.jsx';
+import Modal from '../shared/Modal.jsx';
+import SnakeDrawer from './SnakeDrawer.jsx';
+import SnakeMeta from './SnakeMeta.jsx';
+import SnakeGamePad from './SnakeGamePad.jsx';
 
 function Snake() {
-  const [snakeHead, moveSnakeHead] = useReducer(snakeHeadReducer, INIT_POS);
-  const [snack, setSnack] = useState({ ...INIT_POS, col: 13 });
-  const [direction, setDirection] = useState('RIGHT');
-  const timer = useRef({ timeoutTime: Date.now(), timeoutID: null });
+  const { current: gameManager } = useRef(new SnakeGameManager());
+  const [positions, setPositions] = useState(gameManager.getPositions());
+  const [gameOver, setGameOver] = useState(false);
+  const [pause, setPause] = useState(true);
+  const requestID = useRef();
+  const prevMoveTime = useRef();
 
   /* Add key-down event listener */
   useEffect(() => {
     function handleKeyDown(event) {
+      if (pause || gameOver) {
+        return;
+      }
       const keyPressed = event.key;
-      console.log(keyPressed, direction);
-      if (keyPressed === 'ArrowUp' && direction !== 'DOWN') {
-        setDirection('UP');
+      if (keyPressed === 'ArrowUp') {
+        gameManager.changeSnakeDirection('UP');
         return;
       }
-      if (keyPressed === 'ArrowDown' && direction !== 'UP') {
-        setDirection('DOWN');
+      if (keyPressed === 'ArrowDown') {
+        gameManager.changeSnakeDirection('DOWN');
         return;
       }
-      if (keyPressed === 'ArrowLeft' && direction !== 'RIGHT') {
-        setDirection('LEFT');
+      if (keyPressed === 'ArrowLeft') {
+        gameManager.changeSnakeDirection('LEFT');
         return;
       }
-      if (keyPressed === 'ArrowRight' && direction !== 'LEFT') {
-        setDirection('RIGHT');
+      if (keyPressed === 'ArrowRight') {
+        gameManager.changeSnakeDirection('RIGHT');
         return;
       }
     }
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [direction]);
+  }, [pause, gameOver]);
 
   /* make snake move automatically. */
-  useEffect(() => {
-    const remainingTime = timer.current.timeoutTime - Date.now();
-    if (remainingTime > 0) {
-      clearTimeout(timer.current.timeoutID);
-      timer.current.timeoutID = setTimeout(
-        () => moveSnakeHead(direction),
-        remainingTime
-      );
-    } else {
-      timer.current.timeoutTime = Date.now() + MOVE_SPEED;
-      timer.current.timeoutID = setTimeout(
-        () => moveSnakeHead(direction),
-        MOVE_SPEED
-      );
+  function moveSnake(timestamp) {
+    if (!prevMoveTime.current) {
+      prevMoveTime.current = timestamp;
     }
-  }, [snakeHead, direction]);
-
-  const gridCells = [];
-  for (let i = 0; i < NUM_ROW; ++i) {
-    for (let j = 0; j < NUM_COL; ++j) {
-      gridCells.push(
-        <div
-          className="snake_game_container__grid-cell"
-          row={i}
-          col={j}
-          key={`cell_${i}_${j}`}
-        >
-          {snakeHead.row === i && snakeHead.col === j && (
-            <div className="snake_game_container__grid-cell-snake highlighted" />
-          )}
-          {snack.row === i && snack.col === j && (
-            <div className="snake_game_container__grid-cell-snack" />
-          )}
-        </div>
-      );
+    const timeElapsed = timestamp - prevMoveTime.current;
+    if (timeElapsed >= MOVE_SPEED) {
+      gameManager.moveSnake();
+      setPositions(gameManager.getPositions());
+      if (gameManager.isGameOver()) {
+        return setGameOver(true);
+      }
+      prevMoveTime.current = timestamp;
     }
+    requestID.current = requestAnimationFrame(moveSnake);
   }
+
+  useEffect(() => {
+    if (!gameOver && !pause) {
+      requestID.current = requestAnimationFrame(moveSnake);
+    }
+
+    return () => cancelAnimationFrame(requestID.current);
+  }, [gameOver, pause]);
+
+  function handleRestartClick() {
+    gameManager.restart();
+    setGameOver(false);
+    setPause(true);
+    setPositions(gameManager.getPositions());
+  }
+  function handleStartClick() {
+    setPause(false);
+  }
+  function handlePauseClick() {
+    setPause(true);
+  }
+  function changeDirection(direction) {
+    if (pause || gameOver) return;
+    gameManager.changeSnakeDirection(direction);
+  }
+
+  const { snakePos, snackPos } = positions;
   return (
     <>
+      <SnakeMeta />
       <HomeButton />
-      <div className="snake_game_container">
-        <div className="snake_game_container__grid">{gridCells}</div>
-      </div>
+      <Modal open={gameOver}>
+        Game Over
+        <button onClick={handleRestartClick}>Restart</button>
+      </Modal>
+      Score: {gameManager.getScore()}
+      <SnakeDrawer snakePos={snakePos} snackPos={snackPos} />
+      <button onClick={handleStartClick}>Start</button>
+      <button onClick={handlePauseClick}>Pause</button>
+      <button onClick={handleRestartClick}>Restart</button>
+      <SnakeGamePad changeDirection={changeDirection} />
     </>
   );
 }

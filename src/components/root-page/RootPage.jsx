@@ -11,11 +11,11 @@ function RootPage() {
       <RootPageMeta />
       <header>ROOT PAGE</header>
       <section className="root_game_list">
-        <Link to="/tic-tac-toe" className="root_game_list__item">
+        <Link to="/tic-tac-toe" className="root_game_list__item" viewTransition>
           <img src={tictactoeLogo} />
           Tic-Tac-Toe
         </Link>
-        <Link to="/snake" className="root_game_list__item">
+        <Link to="/snake" className="root_game_list__item" viewTransition>
           <img src={snakeLogo} />
           Snake
         </Link>

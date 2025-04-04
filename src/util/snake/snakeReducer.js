@@ -3,7 +3,7 @@ import { NUM_ROW, NUM_COL } from './snakeInitVar.js';
 function mod(n, m) {
   return ((n % m) + m) % m;
 }
-function snakeHeadReducer(state, action) {
+function snakeReducer(state, action) {
   switch (action) {
     case 'LEFT':
       return { ...state, col: mod(state.col - 1, NUM_COL) };
@@ -16,4 +16,4 @@ function snakeHeadReducer(state, action) {
   }
 }
 
-export default snakeHeadReducer;
+export default snakeReducer;

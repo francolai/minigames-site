@@ -1,0 +1,60 @@
+.snake_game_pad {
+  height: 10rem;
+  width: 10rem;
+  display: grid;
+  grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+  grid-template-areas:
+    '. up .'
+    'left . right'
+    '. down .';
+  margin: 0 auto;
+}
+
+.snake_game_pad__up {
+  grid-area: up;
+  cursor: pointer;
+  background-image: url(/src/assets/snake/angle-up.svg);
+  background-size: cover;
+}
+.snake_game_pad__down {
+  grid-area: down;
+  cursor: pointer;
+  background-image: url(/src/assets/snake/angle-down.svg);
+  background-size: cover;
+}
+.snake_game_pad__left {
+  grid-area: left;
+  cursor: pointer;
+  background-image: url(/src/assets/snake/angle-left.svg);
+  background-size: cover;
+}
+.snake_game_pad__right {
+  grid-area: right;
+  cursor: pointer;
+  background-image: url(/src/assets/snake/angle-right.svg);
+  background-size: cover;
+}
+
+.snake_game_pad__up:active {
+  animation: scale-down 0.2s forwards;
+}
+.snake_game_pad__down:active {
+  animation: scale-down 0.2s forwards;
+}
+.snake_game_pad__left:active {
+  animation: scale-down 0.2s forwards;
+}
+.snake_game_pad__right:active {
+  animation: scale-down 0.2s forwards;
+}
+
+@keyframes scale-down {
+  to {
+    scale: 0.9;
+  }
+}
+@media (min-width: 30rem) {
+  .snake_game_pad {
+    display: none;
+  }
+}
