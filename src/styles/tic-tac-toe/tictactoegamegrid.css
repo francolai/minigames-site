@@ -11,56 +11,65 @@
 }
 
 .game__grid * {
-  border: 2px solid black;
+  border: 1px solid black;
+  padding: 1rem;
+}
+
+.game__grid-cell_0 {
+  border-top: none;
+  border-left: none;
 }
 
 .game__grid-cell_1 {
   border-top: none;
-  border-left: none;
 }
 
 .game__grid-cell_2 {
   border-top: none;
+  border-right: none;
 }
 
 .game__grid-cell_3 {
-  border-top: none;
-  border-right: none;
-}
-
-.game__grid-cell_4 {
   border-left: none;
 }
 
-.game__grid-cell_6 {
+.game__grid-cell_5 {
   border-right: none;
+}
+
+.game__grid-cell_6 {
+  border-bottom: none;
+  border-left: none;
 }
 
 .game__grid-cell_7 {
   border-bottom: none;
-  border-left: none;
 }
 
 .game__grid-cell_8 {
   border-bottom: none;
+  border-right: none;
 }
 
-.game__grid-cell_9 {
-  border-bottom: none;
-  border-right: none;
+.game__grid div[class*='_content'] {
+  width: 100%;
+  height: 100%;
+  border: none;
+  padding: 0;
 }
 
 .game__grid div.nought {
   background-image: url('/src/assets/tic-tac-toe/nought.png');
-  background-size: 75%;
+  background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
+  background-origin: border-box;
   animation: fade-in 0.2s;
 }
 
 .game__grid div.cross {
   background-image: url('/src/assets/tic-tac-toe/cross.png');
-  background-size: 75%;
+  background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
   animation: fade-in 0.2s;
@@ -76,7 +85,7 @@
 }
 .game__grid-turn_nought div.unselected {
   background-image: url('/src/assets/tic-tac-toe/nought.png');
-  background-size: 75%;
+  background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
   background-color: rgba(255, 255, 255, 1);
@@ -89,7 +98,7 @@
 
 .game__grid-turn_cross div.unselected {
   background-image: url('/src/assets/tic-tac-toe/cross.png');
-  background-size: 75%;
+  background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
   background-color: rgba(255, 255, 255, 1);
@@ -98,4 +107,19 @@
 
 .game__grid-turn_cross div.unselected:hover {
   background-color: rgba(255, 255, 255, 0.5);
+}
+
+.game__grid .winner {
+  border: none;
+  animation: enlarged-pulse 0.5s 5 alternate linear backwards !important;
+  scale: 1.5;
+}
+
+@keyframes enlarged-pulse {
+  from {
+    scale: 1;
+  }
+  to {
+    scale: 1.5;
+  }
 }

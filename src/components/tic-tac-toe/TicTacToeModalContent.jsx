@@ -3,7 +3,7 @@ function TicTacToeModalContent({ winner, onRestartButtonClick }) {
     <>
       <h1>GAME OVER!</h1>
       <h3>
-        {winner
+        {winner && winner !== 'draw'
           ? `${winner.replace(/(^\w|\s\w)/g, (m) => m.toUpperCase())} wins!`
           : `A Draw!`}
       </h3>

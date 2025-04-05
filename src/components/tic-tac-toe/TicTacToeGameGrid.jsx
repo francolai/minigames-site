@@ -5,7 +5,12 @@ function TicTacToeGameGrid({
   currentPlayer,
   selectedCells,
   onCellClick,
+  winnerLocation,
 }) {
+  const winnerLoc = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+  if (gameOver) {
+    winnerLocation.forEach(({ row, col }) => (winnerLoc[row * 3 + col] = 1));
+  }
   return (
     <div
       className={`game__grid ${
@@ -16,12 +21,16 @@ function TicTacToeGameGrid({
         .fill()
         .map((val, ind) => (
           <div
-            key={`game__grid-cell_${ind + 1}`}
-            className={`game__grid-cell_${ind + 1} ${
-              selectedCells[ind + 1] ? selectedCells[ind + 1] : 'unselected'
-            }`}
-            onClick={() => onCellClick(ind + 1)}
-          />
+            key={`game__grid-cell_${ind}`}
+            className={`game__grid-cell_${ind}`}
+            onClick={() => onCellClick(ind)}
+          >
+            <div
+              className={`game__grid-cell_${ind}_content ${
+                selectedCells[ind] ? selectedCells[ind] : 'unselected'
+              } ${winnerLoc[ind] ? 'winner' : ''}`}
+            ></div>
+          </div>
         ))}
     </div>
   );
