@@ -1,7 +1,5 @@
-// Global constants and functions
-const NOUGHT = 1;
-const CROSS = -1;
-const NONE = 0;
+import { NOUGHT, CROSS, NONE } from './tic-tac-toe-global';
+import TicTacToeAIPlayer from './tic-tac-toeAI';
 
 /**
  * Represents a tic-tac-toc grid.
@@ -40,7 +38,10 @@ class TicTacToeGrid {
 
   /**
    * Returns the 1-d grid.
-   * @returns {number[]}
+   * @returns {[NOUGHT | CROSS |  NONE]}
+   * - 1 - NOUGHT
+   * - 0 - NONE
+   * - -1 - CROSS
    */
   get1DGrid() {
     const cells = [];
@@ -50,7 +51,10 @@ class TicTacToeGrid {
 
   /**
    * Returns the 2-d grid.
-   * @returns
+   * @returns {[[NOUGHT | CROSS |  NONE]]}
+   * - 1 - NOUGHT
+   * - 0 - NONE
+   * - -1 - CROSS
    */
   get2DGrid() {
     return this.#grid;
@@ -161,6 +165,8 @@ class TicTacToeGameManager {
   /** @type {{winner: NOUGHT | CROSS | null, where: [{row: number, col: number}] | null}} */
   #winner;
   #gameOver = false;
+  #AIPlayer;
+  #enableAI = true;
 
   /**
    * Create and initialize a tic-tac-toe game.
@@ -169,6 +175,7 @@ class TicTacToeGameManager {
     this.#grid = new TicTacToeGrid();
     this.#logic = new TicTacToeLogic(this.#grid);
     this.#whoseTurn = NOUGHT;
+    this.#AIPlayer = new TicTacToeAIPlayer(this, this.#grid, 'cross');
   }
 
   /**
@@ -186,10 +193,14 @@ class TicTacToeGameManager {
     if (this.#logic.isGameOver()) {
       this.#winner = this.#logic.checkWinner();
       this.#gameOver = true;
+      return;
     }
-    this.#whoseTurn === NOUGHT
-      ? (this.#whoseTurn = CROSS)
-      : (this.#whoseTurn = NOUGHT);
+    if (this.#whoseTurn === NOUGHT) {
+      this.#whoseTurn = CROSS;
+      if (this.#enableAI) this.#AIPlayer.play();
+    } else {
+      this.#whoseTurn = NOUGHT;
+    }
   }
 
   /**
@@ -249,6 +260,12 @@ class TicTacToeGameManager {
   }
 
   /**
+   * Toggle the AI on or off.
+   */
+  toggleAI() {
+    this.#enableAI = !this.#enableAI;
+  }
+  /**
    * Restart the game.
    */
   restart() {
@@ -257,7 +274,9 @@ class TicTacToeGameManager {
     this.#whoseTurn = NOUGHT;
     this.#winner = undefined;
     this.#gameOver = false;
+    this.#AIPlayer = new TicTacToeAIPlayer(this, this.#grid, 'cross');
   }
 }
 
 export default TicTacToeGameManager;
+export { TicTacToeGrid };

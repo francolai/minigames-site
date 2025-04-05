@@ -14,6 +14,7 @@ function TicTacToe() {
   const { current: gameManager } = useRef(new TicTacToeGameManager());
   const [gameState, setGameState] = useState(gameManager.getGameState());
   const [showModal, setShowModal] = useState(false);
+  const [AIactive, setAIActive] = useState(true);
 
   const { turn: currentPlayer, grid1D, winner, state } = gameState;
   const winnerLocation = gameManager.getWinnerLocation();
@@ -35,6 +36,12 @@ function TicTacToe() {
     setGameState(gameManager.getGameState());
     setShowModal(false);
   }
+  function handleAIToggle() {
+    setAIActive((prev) => !prev);
+    gameManager.toggleAI();
+    gameManager.restart();
+    setGameState(gameManager.getGameState());
+  }
 
   return (
     <>
@@ -47,6 +54,16 @@ function TicTacToe() {
         />
       </Modal>
       <div className="game__container">
+        <div className="game__container_toggleAI">
+          Toggle AI
+          <span>
+            <input
+              type="checkbox"
+              onChange={handleAIToggle}
+              checked={AIactive}
+            />
+          </span>
+        </div>
         <TicTacToeGameHeader className="game__header" />
         <TicTacToeGameGrid
           gameOver={state === 'finished'}

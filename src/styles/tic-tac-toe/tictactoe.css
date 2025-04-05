@@ -19,6 +19,13 @@
   font-family: inherit;
 }
 
+.game__container_toggleAI {
+  display: flex;
+  width: 6rem;
+  justify-content: space-between;
+  align-items: center;
+  align-self: flex-end;
+}
 .game__header {
   font-size: 2rem;
 }

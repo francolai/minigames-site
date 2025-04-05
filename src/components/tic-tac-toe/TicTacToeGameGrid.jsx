@@ -8,7 +8,7 @@ function TicTacToeGameGrid({
   winnerLocation,
 }) {
   const winnerLoc = [0, 0, 0, 0, 0, 0, 0, 0, 0];
-  if (gameOver) {
+  if (winnerLocation) {
     winnerLocation.forEach(({ row, col }) => (winnerLoc[row * 3 + col] = 1));
   }
   return (
