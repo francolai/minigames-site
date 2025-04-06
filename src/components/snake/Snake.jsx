@@ -20,14 +20,17 @@ function Snake() {
   const [positions, setPositions] = useState(gameManager.getPositions());
   const [gameOver, setGameOver] = useState(false);
   const [pause, setPause] = useState(true);
+  const [isFirstMove, setIsFirstMove] = useState(true);
   const requestID = useRef();
   const prevMoveTime = useRef();
 
   /* Add key-down event listener */
   useEffect(() => {
     function handleKeyDown(event) {
-      if (pause || gameOver) {
-        return;
+      if ((pause && !isFirstMove) || gameOver) return;
+      if (isFirstMove) {
+        setIsFirstMove(false);
+        setPause(false);
       }
       const keyPressed = event.key;
       if (keyPressed === 'ArrowUp') {
@@ -49,7 +52,7 @@ function Snake() {
     }
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [pause, gameOver]);
+  }, [pause, gameOver, isFirstMove]);
 
   /* make snake move automatically. */
   function moveSnake(timestamp) {
@@ -81,6 +84,7 @@ function Snake() {
     setGameOver(false);
     setPause(true);
     setPositions(gameManager.getPositions());
+    setIsFirstMove(true);
   }
   function handleStartClick() {
     setPause(false);
@@ -89,7 +93,11 @@ function Snake() {
     setPause(true);
   }
   function changeDirection(direction) {
-    if (pause || gameOver) return;
+    if ((pause && !isFirstMove) || gameOver) return;
+    if (isFirstMove) {
+      setIsFirstMove(false);
+      setPause(false);
+    }
     gameManager.changeSnakeDirection(direction);
   }
   const { snakePos, snackPos } = positions;
@@ -111,7 +119,7 @@ function Snake() {
         <div className="snake_game_buttons">
           <img src={playLogo} onClick={handleStartClick} />
           <img src={pauseLogo} onClick={handlePauseClick} />
-          <img src={restartLogo} button onClick={handleRestartClick} />
+          <img src={restartLogo} onClick={handleRestartClick} />
         </div>
         <SnakeGamePad changeDirection={changeDirection} />
       </div>
