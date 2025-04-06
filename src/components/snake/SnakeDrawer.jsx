@@ -1,5 +1,12 @@
 import { NUM_COL, NUM_ROW } from '../../util/snake/snakeInitVar';
+import {
+  deduceHeadImg,
+  deduceTailImg,
+  deduceBodyImg,
+} from '../../util/snake/snake-img-helper';
 import '/src/styles/snake/snake-drawer.css';
+
+import apple from '/src/assets/snake/apple.png';
 
 function SnakeDrawer({ snakePos, snackPos }) {
   const gridCells = [];
@@ -13,39 +20,58 @@ function SnakeDrawer({ snakePos, snackPos }) {
           key={`cell_${i}_${j}`}
         >
           {snackPos.row === i && snackPos.col === j && (
-            <div className="snake_game_container__grid-cell-snack pulse" />
+            <img
+              src={apple}
+              className="snake_game_container__grid-cell-snack"
+            ></img>
           )}
         </div>
       );
     }
   }
 
-  snakePos.forEach(({ row, col }, idx) => {
+  snakePos.forEach(({ row, col }, idx, arr) => {
     if (idx === 0) {
+      const headImg = deduceHeadImg({ row, col }, arr[1]);
+
       gridCells[NUM_COL * row + col] = (
         <div
           className="snake_game_container__grid-cell"
-          row={row}
-          col={col}
           key={`cell_${row}_${col}`}
         >
-          <div
-            className="snake_game_container__grid-cell-snake highlighted"
+          <img
+            className="snake_game_container__grid-cell-snake"
             key={`snake-head`}
+            src={headImg}
+          />
+        </div>
+      );
+    } else if (idx === arr.length - 1) {
+      const tailImg = deduceTailImg({ row, col }, arr[idx - 1]);
+
+      gridCells[NUM_COL * row + col] = (
+        <div
+          className="snake_game_container__grid-cell"
+          key={`cell_${row}_${col}`}
+        >
+          <img
+            className="snake_game_container__grid-cell-snake"
+            key={`snake-tail`}
+            src={tailImg}
           />
         </div>
       );
     } else {
+      const bodyImg = deduceBodyImg({ row, col }, arr[idx - 1], arr[idx + 1]);
       gridCells[NUM_COL * row + col] = (
         <div
           className="snake_game_container__grid-cell"
-          row={row}
-          col={col}
           key={`cell_${row}_${col}`}
         >
-          <div
+          <img
             className="snake_game_container__grid-cell-snake"
             key={`snake-body-${idx}`}
+            src={bodyImg}
           />
         </div>
       );

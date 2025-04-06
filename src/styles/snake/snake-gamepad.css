@@ -53,8 +53,8 @@
     scale: 0.9;
   }
 }
-@media (min-width: 30rem) {
+/* @media (min-width: 30rem) {
   .snake_game_pad {
     display: none;
   }
-}
+} */

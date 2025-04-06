@@ -4,62 +4,52 @@
 }
 
 .snake_game_container {
-  min-width: 30rem;
-  width: 75%;
+  width: 100%;
   aspect-ratio: var(--col) / var(--row);
-  border: 1px solid;
-  padding: 1rem;
-  background: linear-gradient(
-    to right bottom,
-    rgba(0, 0, 0, 0.8),
-    rgba(0, 0, 0, 0.5) 50%,
-    rgba(0, 0, 0, 0.8)
+  border: 5px solid green;
+  background: rgb(38, 218, 36);
+  background: radial-gradient(
+    circle,
+    rgba(38, 218, 36, 0.7) 0%,
+    rgba(58, 184, 50, 0.7) 100%
   );
 }
 
 .snake_game_container__grid {
   display: grid;
-  border: 1px solid;
   grid-template: repeat(var(--row), 1fr) / repeat(var(--col), 1fr);
   height: 100%;
-  background-color: rgba(255, 255, 255, 0.9);
 }
 .snake_game_container__grid-cell {
   /* border: 1px solid rgba(0, 0, 0, 0.1); */
-  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .snake_game_container__grid-cell-snake {
   width: 100%;
   height: 100%;
-  background-color: rgba(19, 212, 19, 0.5);
 }
 
-.snake_game_container__grid-cell-snake.highlighted {
+/* .snake_game_container__grid-cell-snake.highlighted {
   background-color: rgba(19, 212, 19, 0.55);
-}
+} */
 
 .snake_game_container__grid-cell-snack {
-  background-color: rgba(255, 0, 0);
-  width: 80%;
-  height: 80%;
-  margin: 10% auto;
-}
-
-.pulse {
+  /* background-color: rgba(255, 0, 0); */
+  /* width: 80%;
+  height: 80%; */
+  width: 100%;
+  height: 100%;
   animation: pulse 1s infinite linear;
 }
+
 @keyframes pulse {
   0% {
   }
-  25% {
-    scale: 1.1;
-  }
   50% {
-    scale: 1;
-  }
-  75% {
-    scale: 0.9;
+    scale: 1.5;
   }
   100% {
     scale: 1;

@@ -8,6 +8,13 @@ import SnakeDrawer from './SnakeDrawer.jsx';
 import SnakeMeta from './SnakeMeta.jsx';
 import SnakeGamePad from './SnakeGamePad.jsx';
 
+import apple from '/src/assets/snake/apple.png';
+import pauseLogo from '/src/assets/snake/pause.svg';
+import playLogo from '/src/assets/snake/play.svg';
+import restartLogo from '/src/assets/snake/restart.svg';
+
+import '/src/styles/snake/snake-ui.css';
+
 function Snake() {
   const { current: gameManager } = useRef(new SnakeGameManager());
   const [positions, setPositions] = useState(gameManager.getPositions());
@@ -52,10 +59,10 @@ function Snake() {
     const timeElapsed = timestamp - prevMoveTime.current;
     if (timeElapsed >= MOVE_SPEED) {
       gameManager.moveSnake();
-      setPositions(gameManager.getPositions());
       if (gameManager.isGameOver()) {
         return setGameOver(true);
       }
+      setPositions(gameManager.getPositions());
       prevMoveTime.current = timestamp;
     }
     requestID.current = requestAnimationFrame(moveSnake);
@@ -85,22 +92,29 @@ function Snake() {
     if (pause || gameOver) return;
     gameManager.changeSnakeDirection(direction);
   }
-
   const { snakePos, snackPos } = positions;
   return (
     <>
       <SnakeMeta />
-      <HomeButton />
       <Modal open={gameOver}>
-        Game Over
+        <p>Game Over</p>
         <button onClick={handleRestartClick}>Restart</button>
       </Modal>
-      Score: {gameManager.getScore()}
-      <SnakeDrawer snakePos={snakePos} snackPos={snackPos} />
-      <button onClick={handleStartClick}>Start</button>
-      <button onClick={handlePauseClick}>Pause</button>
-      <button onClick={handleRestartClick}>Restart</button>
-      <SnakeGamePad changeDirection={changeDirection} />
+      <div className="snake_game_ui">
+        <div className="snake_game_header_bar">
+          <HomeButton />
+          <span className="snake_game_header_bar__score">
+            <img src={apple} /> {gameManager.getScore()}
+          </span>
+        </div>
+        <SnakeDrawer snakePos={snakePos} snackPos={snackPos} />
+        <div className="snake_game_buttons">
+          <img src={playLogo} onClick={handleStartClick} />
+          <img src={pauseLogo} onClick={handlePauseClick} />
+          <img src={restartLogo} button onClick={handleRestartClick} />
+        </div>
+        <SnakeGamePad changeDirection={changeDirection} />
+      </div>
     </>
   );
 }
