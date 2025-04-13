@@ -27,6 +27,7 @@ function Snake() {
   /* Add key-down event listener */
   useEffect(() => {
     function handleKeyDown(event) {
+      event.preventDefault();
       if ((pause && !isFirstMove) || gameOver) return;
       if (isFirstMove) {
         setIsFirstMove(false);
